@@ -8,7 +8,6 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
@@ -69,8 +68,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
-  max-width: 800px;
+  flex-direction: column;
+  max-width: 80%;
 }
 
 .card {
@@ -103,10 +102,39 @@
   line-height: 1.5;
 }
 
-.logo {
-  height: 1em;
-  margin-left: 0.5rem;
+.todoContainer{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
+.todoContainer .taskDesc{
+  flex:1;
+  padding: 15px;
+}
+.todoContainer .taskPriorityCircle{
+  display: inline-block;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  background-color: #000000;
+
+  margin: 5px;
+}
+.todoContainer .taskButton{
+  width: 60px;
+  padding: 5px;
+  background-color: black;
+  border: 0;
+  margin: 10px;
+  border-radius: 5px;
+}
+.todoContainer .taskButton span{
+  color: white;
+}
+
+
+
 
 @media (max-width: 600px) {
   .grid {
