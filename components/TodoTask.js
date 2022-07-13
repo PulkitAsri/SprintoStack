@@ -1,4 +1,6 @@
+import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
+import { DELETE_TASK } from "../graphql/queries";
 import styles from "../styles/Home.module.css";
 
 const priorityColors={
@@ -10,6 +12,16 @@ const priorityColors={
 export const TodoTask = ({taskData}) => {
 
   const [editState, setEditState] = useState(false);
+
+  const [deleteTask]= useMutation(DELETE_TASK,{
+    onCompleted: (data)=> window.location.reload()
+  });
+
+  const handleDelete=(e)=>{
+    e.preventDefault();
+    console.log(taskData.id);
+    deleteTask({variables:{deleteTaskId: taskData.id}});
+  }
 
   return (
     <div className={styles.todoContainer}>
@@ -29,7 +41,7 @@ export const TodoTask = ({taskData}) => {
       >
         <span>{editState?`Save`:`Edit`}</span>
       </button>
-      <button className={styles.taskButton}>
+      <button className={styles.taskButton} onClick={handleDelete}>
         <span>Delete</span>
       </button>
     </div>
