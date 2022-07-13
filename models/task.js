@@ -1,5 +1,3 @@
- 
- 
 const taskModel = (sequelize, DataTypes) => {
   
   const Task = sequelize.define('task', {

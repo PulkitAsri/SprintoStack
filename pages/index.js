@@ -1,12 +1,9 @@
 import Head from "next/head";
-import Image from "next/image";
 import { AddNewTodo } from "../components/AddNewTodo";
 import { TodoTask } from "../components/TodoTask";
 import styles from "../styles/Home.module.css";
-import { useQuery, gql, useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { CREATE_TASK, GET_ALL_TASKS } from "../graphql/queries";
-
-
 
 export default function Home() {
   const { loading, error, data } = useQuery(GET_ALL_TASKS);

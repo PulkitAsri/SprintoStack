@@ -1,18 +1,9 @@
-import Sequelize, { DataTypes } from "sequelize";
-
-
-const testConnection = async () => {
-  try {
-    await sequelize.authenticate();
-    console.log("Connection has been established successfully.");
-  } catch (error) {
-    console.error("Unable to connect to the database:", error);
-  }
-};
+import Sequelize from "sequelize";
 
 const sequelize = new Sequelize("pulkitasri", "pulkitasri", "postgres", {
   host: "localhost",
   dialect: "postgres",
+  logging: false,
   define: {
     underscored: true,
   },
@@ -25,7 +16,17 @@ const sequelize = new Sequelize("pulkitasri", "pulkitasri", "postgres", {
 //   }
 // });
 
-testConnection();
+
+//Testing the connection 
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log("Connection has been established successfully.");
+  } catch (error) {
+    console.error("Unable to connect to the database:", error);
+  }
+})();
+
 
 const models = {
   Task: require('./task').default(sequelize, Sequelize.DataTypes),

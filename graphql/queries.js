@@ -39,3 +39,21 @@ export const DELETE_TASK = gql`
     }
   }
 `;
+
+export const UPDATE_TASK = gql`
+  mutation UpdateTask(
+    $id: Int!
+    $taskDescription: String!
+    $priority: String!
+    $dueDate: String!
+  ) {
+    updateTask(
+      id: $id
+      taskDescription: $taskDescription
+      priority: $priority
+      dueDate: $dueDate
+    ) {
+      id
+    }
+  }
+`;

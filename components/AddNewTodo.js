@@ -8,9 +8,8 @@ export const AddNewTodo = ({ onSubmit }) => {
     completed: false,
     dueDate: new Date().toJSON().slice(0, 10),
   };
+  
   const [newTask, setNewTask] = useState(initialNewTaskState);
-  const [newTodoEditText, setNewTodoEditText] = useState("");
-  const [prioritySelectedValue, setPrioritySelectedValue] = useState("LOW");
   const handleChange = (e) => {
     const { name ,value } = e.target;
     setNewTask((prev) => {
@@ -31,6 +30,7 @@ export const AddNewTodo = ({ onSubmit }) => {
           name="taskDescription"
           onChange={handleChange}
         />
+        <input type="date" name="dueDate" value={newTask.dueDate} onChange={handleChange} />
 
         <select
           name="priority"
@@ -41,7 +41,6 @@ export const AddNewTodo = ({ onSubmit }) => {
           <option value="MEDIUM">Medium</option>
           <option value="HIGH">High</option>
         </select>
-        <input type="date" name="dueDate" value={newTask.dueDate} onChange={handleChange} />
         <button
           className={styles.addNewTodoButton}
           disabled={newTask.taskDescription === ""}
