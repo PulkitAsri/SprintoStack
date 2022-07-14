@@ -4,6 +4,7 @@ import { TodoTask } from "../components/TodoTask";
 import styles from "../styles/Home.module.css";
 import { useQuery, useMutation } from "@apollo/client";
 import { CREATE_TASK, GET_ALL_TASKS } from "../graphql/queries";
+import FiltersContainer from "../components/FiltersContainer";
 
 export default function Home() {
   const { loading, error, data } = useQuery(GET_ALL_TASKS);
@@ -35,6 +36,7 @@ export default function Home() {
         <h1 className={styles.title}>TodoList</h1>
 
         <AddNewTodo onSubmit={addTaskOnSubmit} />
+        <FiltersContainer />
         <div className={styles.grid}>
           {data.allTasks.map((todoTask) => (
             <TodoTask taskData={todoTask} key={todoTask.id} />

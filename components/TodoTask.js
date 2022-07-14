@@ -5,7 +5,6 @@ import { DELETE_TASK, UPDATE_TASK } from "../graphql/queries";
 import styles from "../styles/Home.module.css";
 import { calculateNoOfDaysFromToday } from "../util/calculateNoOfDaysFromToday";
 
-
 export const TodoTask = ({ taskData }) => {
   const [editState, setEditState] = useState(false);
   const [updatedTaskData, setUpdatedTaskData] = useState(taskData);
@@ -85,7 +84,9 @@ export const TodoTask = ({ taskData }) => {
       </button>
 
       <input type="checkbox" value={taskData.completed} onChange={() => {}} />
-      <span className={styles.todoDueDate}>{calculateNoOfDaysFromToday(taskData.dueDate)}</span>
+      <span className={styles.todoDueDate} style={{ color: (calculateNoOfDaysFromToday(taskData.dueDate).diffDays >=0)?"green":"red" }}>
+        {calculateNoOfDaysFromToday(taskData.dueDate).message}
+      </span>
     </div>
   );
 };

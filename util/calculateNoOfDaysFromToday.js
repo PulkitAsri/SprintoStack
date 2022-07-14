@@ -6,11 +6,11 @@ export const calculateNoOfDaysFromToday = (date1) => {
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   console.log(diffDays + " days");
   switch(diffDays){
-    case 0: return "due Today";
-    case 1: return "due Tomorrow";
-    case -1: return "due Yesterday";
+    case 0: return { message: "due Today", diffDays: diffDays};
+    case 1: return { message: "due Tomorrow", diffDays: diffDays};
+    case -1: return { message:"due Yesterday", diffDays: diffDays};
     default: 
-      if(diffDays > 0) return `due in ${diffDays} days`;
-      else return `due ${-1*diffDays} days ago`;
+      if(diffDays > 0) return {message:`due in ${diffDays} days`, diffDays: diffDays};
+      else return {message:`due ${-1*diffDays} days ago`, diffDays: diffDays};
   }
 };

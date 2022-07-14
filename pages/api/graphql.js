@@ -1,4 +1,4 @@
-import { gql, ApolloServer } from "apollo-server-micro";
+import { ApolloServer } from "apollo-server-micro";
 import dummyData from "../../constants";
 import Cors from "micro-cors";
 import models from "../../models";

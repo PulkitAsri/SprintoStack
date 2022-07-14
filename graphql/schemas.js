@@ -9,11 +9,13 @@ const schemas = gql`
     priority: String!
     completed: Boolean
   }
+
   type Query {
     test: String
     getTask(id: Int!): Task
     allTasks: [Task!]!
   }
+  
   type Mutation {
     createTask(
       taskDescription: String!

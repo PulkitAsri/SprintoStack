@@ -7,7 +7,12 @@ const resolvers = {
       return thatTask;
     },
     allTasks: async (_parent, { id }, { models }) => {
-      const taskList = await models.Task.findAll();
+      const taskList = await models.Task.findAll({
+        order: [
+          ['dueDate', 'ASC'],
+          ['id', 'ASC'],
+        ],
+      });
       return taskList;
     },
     test: (_parent, _args, _context) => "Hi There This is a test",
