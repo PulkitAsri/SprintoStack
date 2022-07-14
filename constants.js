@@ -1,4 +1,4 @@
-const dummyData =[
+export const dummyData =[
   {
     taskDescription: "task1",
     dueDate: "981091",
@@ -24,4 +24,9 @@ const dummyData =[
     priority: "HIGH"
   },
 ]
-export default dummyData
+
+export const priorityColors = {
+  HIGH: "red",
+  MEDIUM: "yellow",
+  LOW: "green",
+};

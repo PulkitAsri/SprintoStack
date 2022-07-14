@@ -1,13 +1,10 @@
-import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { priorityColors } from "../constants";
 import { DELETE_TASK, UPDATE_TASK } from "../graphql/queries";
 import styles from "../styles/Home.module.css";
+import { calculateNoOfDaysFromToday } from "../util/calculateNoOfDaysFromToday";
 
-const priorityColors = {
-  HIGH: "red",
-  MEDIUM: "yellow",
-  LOW: "green",
-};
 
 export const TodoTask = ({ taskData }) => {
   const [editState, setEditState] = useState(false);
@@ -31,11 +28,11 @@ export const TodoTask = ({ taskData }) => {
     deleteTask({ variables: { deleteTaskId: taskData.id } });
   };
 
-  const handleUpdate = (e) =>{
+  const handleUpdate = (e) => {
     e.preventDefault();
-    updateTask({variables:updatedTaskData})
+    updateTask({ variables: updatedTaskData });
     console.log(updatedTaskData);
-  }
+  };
 
   return (
     <div className={styles.todoContainer}>
@@ -63,9 +60,8 @@ export const TodoTask = ({ taskData }) => {
           </select>
         </div>
       ) : (
-        <span className={styles.taskDesc}>{taskData.taskDescription}</span>
+        <p className={styles.taskDesc}>{taskData.taskDescription}</p>
       )}
-
       <div
         className={styles.taskPriorityCircle}
         style={{ backgroundColor: priorityColors[taskData.priority] }}
@@ -75,8 +71,11 @@ export const TodoTask = ({ taskData }) => {
         onClick={(e) => {
           e.preventDefault();
           setEditState(!editState);
-          if(editState &&  JSON.stringify(taskData)!==JSON.stringify(updatedTaskData)) handleUpdate(e);
-          
+          if (
+            editState &&
+            JSON.stringify(taskData) !== JSON.stringify(updatedTaskData)
+          )
+            handleUpdate(e);
         }}
       >
         <span>{editState ? `Save` : `Edit`}</span>
@@ -86,6 +85,7 @@ export const TodoTask = ({ taskData }) => {
       </button>
 
       <input type="checkbox" value={taskData.completed} onChange={() => {}} />
+      <span className={styles.todoDueDate}>{calculateNoOfDaysFromToday(taskData.dueDate)}</span>
     </div>
   );
 };
