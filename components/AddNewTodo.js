@@ -18,17 +18,18 @@ export const AddNewTodo = ({ allUsers }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewTask((prev) => {
+      if (name === "userId") return { ...prev, [name]: parseInt(value) };
       return { ...prev, [name]: value };
     });
+    // console.log(newTask);
   };
-  console.log(allUsers);
   const [createNewTask] = useMutation(CREATE_TASK, {
     onCompleted: (data) => window.location.reload(),
   });
   const addTaskOnSubmit = (e, newTask) => {
     e.preventDefault();
     console.log(newTask);
-    // createNewTask({ variables: newTask });
+    createNewTask({ variables: newTask });
   };
 
   return (
@@ -66,7 +67,7 @@ export const AddNewTodo = ({ allUsers }) => {
           value={newTask.userId || ""}
           onChange={handleChange}
         >
-          <option disabled selected value="">
+          <option disabled hidden value="">
             -- select an option --
           </option>
 
@@ -81,7 +82,7 @@ export const AddNewTodo = ({ allUsers }) => {
           disabled={
             newTask.taskDescription === "" ||
             newTask.userId === null ||
-            newTask.userId === ""
+            newTask.userId === -1
           }
         >
           <span>Add</span>

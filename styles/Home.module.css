@@ -21,8 +21,6 @@
   display: flex;
   flex:3;
   flex-direction: column;
-
-
 }
 
 .title a {
@@ -106,14 +104,30 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  width: 65%;
+  width: 100%;
+  /* min-height: 20px; */
 }
+.todoContainer .taskInfo{
+  display: flex;
+  flex-direction: row;
+  flex:1;
+  align-items: center;
+  justify-content: flex-start;
+}
+.todoContainer .editableContainer{
+  display: flex;
+  flex:1;
+  /* padding: 15px; */
+  margin:0px;
+  padding:0px;
+}
+
 
 .todoContainer .taskDesc{
   display: flex;
   flex:1;
-  min-width: 35vw;
-  max-width: 35vw;
+  min-width: 90%;
+  max-width: 90%;
   padding: 15px;
   margin:0px;
   padding:0px;

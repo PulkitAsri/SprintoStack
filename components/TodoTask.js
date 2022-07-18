@@ -5,12 +5,13 @@ import { DELETE_TASK, UPDATE_TASK } from "../graphql/queries";
 import styles from "../styles/Home.module.css";
 import { calculateNoOfDaysFromToday } from "../util/calculateNoOfDaysFromToday";
 
-export const TodoTask = ({ taskData }) => {
+export const TodoTask = ({ taskData, allUsers }) => {
   const [editState, setEditState] = useState(false);
   const [updatedTaskData, setUpdatedTaskData] = useState(taskData);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUpdatedTaskData((prev) => {
+      if (name === "userId") return { ...prev, [name]: parseInt(value) };
       return { ...prev, [name]: value };
     });
   };
@@ -29,14 +30,15 @@ export const TodoTask = ({ taskData }) => {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    updateTask({ variables: updatedTaskData });
     console.log(updatedTaskData);
+    updateTask({ variables: updatedTaskData });
   };
-
+  console.log(updatedTaskData);
+  // return <div className={styles.todoContainer}></div>;
   return (
     <div className={styles.todoContainer}>
       {editState ? (
-        <div className={styles.taskDesc}>
+        <div className={styles.editableContainer}>
           <input
             name="taskDescription"
             value={updatedTaskData.taskDescription}
@@ -57,14 +59,29 @@ export const TodoTask = ({ taskData }) => {
             <option value="MEDIUM">Medium</option>
             <option value="HIGH">High</option>
           </select>
+          <select
+            name="userId"
+            value={updatedTaskData.userId}
+            onChange={handleChange}
+          >
+            {allUsers.map((user) => (
+              <option value={user.id} key={user.id}>
+                {user.userName}
+              </option>
+            ))}
+          </select>
         </div>
       ) : (
-        <p className={styles.taskDesc}>{taskData.taskDescription}</p>
+        <div className={styles.taskInfo}>
+          <p className={styles.taskDesc}>{taskData.taskDescription}</p>
+          <p>~{taskData.userId}</p>
+        </div>
       )}
       <div
         className={styles.taskPriorityCircle}
         style={{ backgroundColor: priorityColors[taskData.priority] }}
       />
+
       <button
         className={styles.taskButton}
         onClick={(e) => {
@@ -84,7 +101,15 @@ export const TodoTask = ({ taskData }) => {
       </button>
 
       <input type="checkbox" value={taskData.completed} onChange={() => {}} />
-      <span className={styles.todoDueDate} style={{ color: (calculateNoOfDaysFromToday(taskData.dueDate).diffDays >=0)?"green":"red" }}>
+      <span
+        className={styles.todoDueDate}
+        style={{
+          color:
+            calculateNoOfDaysFromToday(taskData.dueDate).diffDays >= 0
+              ? "green"
+              : "red",
+        }}
+      >
         {calculateNoOfDaysFromToday(taskData.dueDate).message}
       </span>
     </div>

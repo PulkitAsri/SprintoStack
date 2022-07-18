@@ -14,12 +14,28 @@ const resolvers = {
           ["id", "ASC"],
         ],
       });
+
+      // const allUsersMap = {};
+      // const userList = await models.User.findAll({
+      //   order: [["id", "ASC"]],
+      // });
+
+      // userList.forEach((user) => {
+      //   allUsersMap[user.id] = user;
+      // });
+
+      // taskList.forEach((task) => {
+      //   task["user"] = allUsersMap[task.userId];
+      // });
+      // console.log(taskList);
+
       return taskList;
     },
     allUsers: async (_parent, {}, { models }) => {
       const userList = await models.User.findAll({
         order: [["id", "ASC"]],
       });
+
       return userList;
     },
   },

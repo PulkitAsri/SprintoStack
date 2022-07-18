@@ -8,6 +8,7 @@ const schemas = gql`
     priority: String!
     completed: Boolean
     userId: Int!
+    user: User!
   }
   type User {
     id: Int!
@@ -35,6 +36,7 @@ const schemas = gql`
       taskDescription: String!
       priority: String!
       dueDate: String!
+      userId: Int!
     ): Task!
 
     createUser(userName: String!, email: String!): User!

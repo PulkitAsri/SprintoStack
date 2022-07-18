@@ -8,6 +8,7 @@ export const GET_ALL_DATA = gql`
       dueDate
       priority
       completed
+      userId
     }
     allUsers {
       id
@@ -70,12 +71,14 @@ export const UPDATE_TASK = gql`
     $taskDescription: String!
     $priority: String!
     $dueDate: String!
+    $userId: Int!
   ) {
     updateTask(
       id: $id
       taskDescription: $taskDescription
       priority: $priority
       dueDate: $dueDate
+      userId: $userId
     ) {
       id
     }

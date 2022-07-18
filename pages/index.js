@@ -44,7 +44,7 @@ export default function Home() {
           <div className={styles.grid}>
             {data.allTasks.map((todoTask) => (
               <TodoTask
-                allUsers={allUsersMap}
+                allUsers={data.allUsers}
                 taskData={todoTask}
                 key={todoTask.id}
               />
