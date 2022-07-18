@@ -9,15 +9,19 @@ const sequelize = new Sequelize("pulkitasri", "pulkitasri", "postgres", {
   },
 });
 
+const models = {
+  User: require("./user").default(sequelize, Sequelize.DataTypes),
+  Task: require("./task").default(sequelize, Sequelize.DataTypes),
+};
 //if there are some associations
-// Object.keys(models).forEach((modelName) => {
-//   if ("associate" in models[modelName]) {
-//     models[modelName].associate(models);
-//   }
-// });
+Object.keys(models).forEach((modelName) => {
+  if ("associate" in models[modelName]) {
+    console.log("here");
+    models[modelName].associate(models);
+  }
+});
 
-
-//Testing the connection 
+//Testing the connection
 (async () => {
   try {
     await sequelize.authenticate();
@@ -27,10 +31,6 @@ const sequelize = new Sequelize("pulkitasri", "pulkitasri", "postgres", {
   }
 })();
 
-
-const models = {
-  Task: require('./task').default(sequelize, Sequelize.DataTypes),
-};
 models.sequelize = sequelize;
 models.Sequelize = Sequelize;
 

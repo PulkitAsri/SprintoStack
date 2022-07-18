@@ -1,26 +1,41 @@
+import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
+import { CREATE_TASK } from "../graphql/queries";
 import styles from "../styles/Home.module.css";
 
-export const AddNewTodo = ({ onSubmit }) => {
+export const AddNewTodo = ({ allUsers }) => {
   const initialNewTaskState = {
     taskDescription: "",
     priority: "LOW",
     completed: false,
     dueDate: new Date().toJSON().slice(0, 10),
+    userId: null,
   };
-  
+
+  // const { loading, error, data } = useQuery(GET_ALL_TASKS);
+
   const [newTask, setNewTask] = useState(initialNewTaskState);
   const handleChange = (e) => {
-    const { name ,value } = e.target;
+    const { name, value } = e.target;
     setNewTask((prev) => {
       return { ...prev, [name]: value };
     });
-  }
+  };
+  console.log(allUsers);
+  const [createNewTask] = useMutation(CREATE_TASK, {
+    onCompleted: (data) => window.location.reload(),
+  });
+  const addTaskOnSubmit = (e, newTask) => {
+    e.preventDefault();
+    console.log(newTask);
+    // createNewTask({ variables: newTask });
+  };
+
   return (
     <div className={styles.addNewTodoConatiner}>
       <form
         onSubmit={(e) => {
-          onSubmit(e, newTask);
+          addTaskOnSubmit(e, newTask);
           setNewTask(initialNewTaskState);
         }}
       >
@@ -30,20 +45,44 @@ export const AddNewTodo = ({ onSubmit }) => {
           name="taskDescription"
           onChange={handleChange}
         />
-        <input type="date" name="dueDate" value={newTask.dueDate} onChange={handleChange} />
+        <input
+          type="date"
+          name="dueDate"
+          value={newTask.dueDate}
+          onChange={handleChange}
+        />
 
         <select
           name="priority"
           value={newTask.priority}
-          onChange={handleChange}        
+          onChange={handleChange}
         >
           <option value="LOW">Low</option>
           <option value="MEDIUM">Medium</option>
           <option value="HIGH">High</option>
         </select>
+        <select
+          name="userId"
+          value={newTask.userId || ""}
+          onChange={handleChange}
+        >
+          <option disabled selected value="">
+            -- select an option --
+          </option>
+
+          {allUsers.map((user) => (
+            <option value={user.id} key={user.id}>
+              {user.userName}
+            </option>
+          ))}
+        </select>
         <button
           className={styles.addNewTodoButton}
-          disabled={newTask.taskDescription === ""}
+          disabled={
+            newTask.taskDescription === "" ||
+            newTask.userId === null ||
+            newTask.userId === ""
+          }
         >
           <span>Add</span>
         </button>

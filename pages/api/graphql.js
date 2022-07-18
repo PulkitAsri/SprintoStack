@@ -29,7 +29,7 @@ export default cors(async (req, res) => {
     res.end();
     return false;
   }
-  await models.sequelize.sync();
+  // await models.sequelize.sync({ alter: true });
   await startServer;
   await apolloServer.createHandler({ path: "/api/graphql" })(req, res);
 });

@@ -1,5 +1,22 @@
 import { gql } from "@apollo/client";
 
+export const GET_ALL_DATA = gql`
+  {
+    allTasks {
+      id
+      taskDescription
+      dueDate
+      priority
+      completed
+    }
+    allUsers {
+      id
+      userName
+      email
+    }
+  }
+`;
+
 export const GET_ALL_TASKS = gql`
   {
     allTasks {
@@ -13,17 +30,24 @@ export const GET_ALL_TASKS = gql`
 `;
 
 export const CREATE_TASK = gql`
-  mutation ($taskDescription: String!, $priority: String!, $dueDate: String!) {
+  mutation (
+    $taskDescription: String!
+    $priority: String!
+    $dueDate: String!
+    $userId: Int!
+  ) {
     createTask(
       taskDescription: $taskDescription
       priority: $priority
       dueDate: $dueDate
+      userId: $userId
     ) {
       id
       priority
       taskDescription
       dueDate
       completed
+      userId
     }
   }
 `;
@@ -54,6 +78,16 @@ export const UPDATE_TASK = gql`
       dueDate: $dueDate
     ) {
       id
+    }
+  }
+`;
+
+export const CREATE_USER = gql`
+  mutation ($userName: String!, $email: String!) {
+    createUser(userName: $userName, email: $email) {
+      id
+      userName
+      email
     }
   }
 `;
